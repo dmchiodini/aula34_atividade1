@@ -8,7 +8,6 @@ import {
 class App extends React.Component {
   constructor(props){
     super(props);
-    console.log("Será exibido uma vez");
     this.state = {cronometro: 10, caracteres: '', habilitar: true, array: []};
     this.inscricaoCronometro;
   }
