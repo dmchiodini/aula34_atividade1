@@ -25,7 +25,7 @@ componentDidMount() {
 }
 
 incrementarCronometro() {
-  this.setState(state => ({cronometro: state.cronometro - 1}));
+  this.setState({cronometro: this.state.cronometro - 1});
 }
 
 render() {
