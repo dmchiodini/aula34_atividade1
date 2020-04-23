@@ -2,13 +2,15 @@ import React from 'react';
 import {
   SafeAreaView,
   Text,
-  TextInput
+  TextInput,
+  Button,
+  View
 } from 'react-native';
 
 class App extends React.Component {
   constructor(props){
     super(props);
-    this.state = {cronometro: 10, caracteres: '', habilitar: true, array: []};
+    this.state = {cronometro: '', caracteres: '', habilitar: false};
     this.inscricaoCronometro;
   }
 
@@ -17,9 +19,8 @@ componentDidMount() {
     if(this.state.cronometro > 0){
       this.incrementarCronometro();
     }
-    if(this.state.cronometro == 0){
+    if(this.state.cronometro === 0){
       this.setState({ habilitar: false})
-      this.setState({ array: [...this.state.caracteres] })
     }
   }, 1000);
 }
@@ -30,16 +31,27 @@ incrementarCronometro() {
 
 render() {
   return(
-    <SafeAreaView style={{ padding: 50 }}>
-      <Text>Cronometro: {this.state.cronometro} segundos. </Text>
+    <SafeAreaView>
+      <Text style={{ backgroundColor: '#054F77', color: '#FFFFFF', height: 65, fontSize: 28, textAlign: 'center', padding: 10 }}>
+        Jogo Digitação
+      </Text>
+      <Text style={{ textAlign: 'center', fontWeight: 'bold', padding: 20 }}>Digite o máximo de caracteres antes que o cronômetro chegue a 0</Text>
+      <Text style={{ fontWeight: 'bold', margin: 20, color: '#FF0000', fontSize: 16}}>Cronômetro: {this.state.cronometro}</Text>     
       <TextInput 
-        style={{ height: 40, marginTop: 10, marginBottom: 10, backgroundColor: "#CCCCCC" }} 
+        style={{ margin: 20, backgroundColor: "#CCCCCC"}} 
         onChangeText={text => this.setState({ caracteres: text.trim()})} 
-        editable={this.state.habilitar?true : false} 
+        editable={this.state.habilitar ? true : false} 
+        value={this.state.caracteres}
       />
-      {this.state.habilitar == false && 
-        <Text>Você digitou {this.state.array.length} caracteres em 10 segundos</Text>
-      }   
+      <View style={{ justifyContent: 'center', display: 'flex', flexDirection: 'row'}}>
+        <Button
+          title="Jogar"
+          onPress={() => {this.setState({cronometro: 10, habilitar: true, caracteres: ''})}}
+        />   
+      </View>
+      {this.state.cronometro === 0 && 
+        <Text style={{ color: 'blue', fontSize: 18, margin: 20, textAlign: 'center' }}> Você digitou {this.state.caracteres.length} caracteres.</Text>
+      }      
     </SafeAreaView>
   )
 }
